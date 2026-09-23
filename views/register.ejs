@@ -1,0 +1,11 @@
+<%- include('partials/header', { title: 'Inscription' }) %>
+<form method="POST" action="/register" class="auth-form">
+  <h1>Inscription</h1>
+  <% if (error) { %><p class="error"><%= error %></p><% } %>
+  <input name="username" placeholder="Pseudo" required minlength="3">
+  <input type="email" name="email" placeholder="Adresse email (Gmail...)" required>
+  <input type="password" name="password" placeholder="Mot de passe (6+ caractères)" required minlength="6">
+  <p class="muted small">Ton email sert à gérer ton compte et n'est visible que par l'équipe du site.</p>
+  <button class="btn">Créer mon compte</button>
+</form>
+<%- include('partials/footer') %>

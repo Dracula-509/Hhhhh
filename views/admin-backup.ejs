@@ -1,0 +1,34 @@
+<%- include('partials/header', { title: 'Sauvegarde' }) %>
+<a href="/admin" class="muted">← Retour</a>
+<h1>Sauvegarde GitHub</h1>
+
+<% if (msg) { %><p class="notice"><%= msg %></p><% } %>
+
+<% if (!enabled) { %>
+  <p class="error">Sauvegarde non configurée. Ajoute <code>GITHUB_TOKEN</code> et <code>GITHUB_BACKUP_REPO</code> dans les variables d'environnement Render.</p>
+<% } else { %>
+  <p class="muted">Sont sauvegardés sur GitHub : les <strong>membres</strong> (pseudo, email, mot de passe haché, rôle, bannissement), les <strong>fiches d'animes</strong>, les <strong>commentaires</strong> et les <strong>notes</strong>. Envoi automatique à chaque changement et toutes les 6 heures. Les vidéos et les images de couverture restent sur le disque Render.</p>
+
+  <% if (last) { %>
+    <p>Dernier essai : <strong><%= last.date %></strong> :
+      <% if (last.ok) { %>
+        ✅ <%= last.users %> membres, <%= last.animes %> animes, <%= last.comments %> commentaires, <%= last.ratings %> notes
+      <% } else { %>
+        ❌ <%= last.error %>
+      <% } %>
+    </p>
+  <% } else { %>
+    <p class="muted">Aucune sauvegarde effectuée depuis le dernier démarrage.</p>
+  <% } %>
+
+  <form method="POST" action="/admin/backup/run">
+    <button class="btn">💾 Sauvegarder maintenant</button>
+  </form>
+
+  <h2>Restaurer</h2>
+  <p class="muted small">Réimporte depuis GitHub ce qui manque. Rien n'est écrasé ni dupliqué. La restauration se fait aussi automatiquement au démarrage si la base est vide (disque perdu).</p>
+  <form method="POST" action="/admin/backup/restore" onsubmit="return confirm('Restaurer depuis GitHub ?')">
+    <button class="btn danger">Restaurer depuis GitHub</button>
+  </form>
+<% } %>
+<%- include('partials/footer') %>

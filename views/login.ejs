@@ -1,0 +1,9 @@
+<%- include('partials/header', { title: 'Connexion' }) %>
+<form method="POST" action="/login" class="auth-form">
+  <h1>Connexion</h1>
+  <% if (error) { %><p class="error"><%= error %></p><% } %>
+  <input name="username" placeholder="Pseudo ou email" required>
+  <input type="password" name="password" placeholder="Mot de passe" required>
+  <button class="btn">Se connecter</button>
+</form>
+<%- include('partials/footer') %>
