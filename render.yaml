@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: otaku-family
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    disk:
+      name: otaku-data
+      mountPath: /data
+      sizeGB: 10
+    envVars:
+      - key: DATA_DIR
+        value: /data
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASS
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: GITHUB_BACKUP_REPO
+        sync: false
+      - key: BACKUP_INTERVAL_HOURS
+        value: "6"
